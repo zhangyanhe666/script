@@ -14,7 +14,7 @@ class PhonePushController  extends ScriptBaseController{
     public function pushMsgQueueAction(){
         $start  =   0;
         $num    =   10;
-        while($data   =   $this->getServer('localhost.xmpush_queue')->where(['status'=>0])->offset($start)->limit($num)->getAll()->toArray()){
+        while($data   =   $this->getServer('script.xmpush_queue')->where(['status'=>0])->offset($start)->limit($num)->getAll()->toArray()){
             $start  +=  $num;
             foreach ($data as $k=>$v){
                 $this->getServer('Model\Xmpush')->push($v['title'],$v['desc'],$v['payload'],$v['id'],$v['sendTarget'],$v['dev']);
