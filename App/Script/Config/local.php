@@ -1,6 +1,6 @@
 <?php
 return array (
-  'scrip' => 
+  'script' => 
   array (
     'driver' => 'Pdo',
     'key' => 'scrip',
