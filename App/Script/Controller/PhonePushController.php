@@ -20,7 +20,7 @@ class PhonePushController  extends ScriptBaseController{
                 $this->getServer('Model\Xmpush')->push($v['title'],$v['desc'],$v['payload'],$v['id'],$v['sendTarget'],$v['dev']);
             }
             $this->getServer('script.xmpush_queue')->update(['status'=>1],['id'=>array_column($data,'id')]);
-            \Library\Application\Common::setTimeAnchor('更新了1000条数据');
+            \Library\Application\Common::setTimeAnchor("更新了".count($data)."条数据");
         }
     }
 }
