@@ -13,7 +13,7 @@ class ScriptBaseController extends LibController{
 
     public function onDispatch() {
         set_time_limit(0);
-        echo "脚本运行开始\n";
+        echo "脚本运行开始:".date('Y-m-d H:i:s')."\n";
         $onDispatch  =   parent::onDispatch();
         echo "相关耗时信息：\n";
         $times  =   Common::getTimeAnchor();
