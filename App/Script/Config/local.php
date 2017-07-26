@@ -4,7 +4,7 @@ return array (
   array (
     'driver' => 'Pdo',
     'key' => 'scrip',
-    'dsn' => 'mysql:dbname=script;host=101.200.83.75:3306',
+    'dsn' => 'mysql:dbname=mili;host=101.200.83.75:3306',
     'username' => 'test75',
     'password' => 'KeYpZrZx',
     'driver_options' => 
