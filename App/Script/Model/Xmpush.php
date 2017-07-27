@@ -39,17 +39,24 @@ class Xmpush extends Model{
         }
         return $this->iosSender;
     }
-    public function push($title,$content,$payload,$id,$alias,$dev){
-        if($dev == 'ios'){
-            $message    =   $this->iosMessage($title, $content, $payload,$id);
-            print_r($this->iosSender()->sendToAliases($message,array($alias))->getRaw());
-        }else{
-            $message    =   $this->message($alias,$title, $content, $payload,$id);
-            print_r($this->androidSender()->multiSend(array($message),TargetedMessage::TARGET_TYPE_USER_ACCOUNT)->getRaw());
+    public function push($title,$content,$payload,$id,$user_type,$sendTarget){
+        $message    =   $this->message($title, $content, $payload,$id);
+        $iosmessage    =   $this->iosMessage($title, $content, $payload,$id);
+        switch ($user_type){
+            case 'all':
+                print_r($this->androidSender()->broadcastAll($message));
+                print_r($this->iosSender()->broadcastAll($iosmessage));
+                break;
+            case 'alias':
+                print_r($this->androidSender()->sendToAliases($message,array($sendTarget))->getRaw());
+                print_r($this->iosSender()->sendToAliases($iosmessage,array($sendTarget))->getRaw());
+                break;
+            default :
+                echo '没有选择发送方式';
         }
     }
     
-    public function message($alias,$title,$content,$payload,$id){
+    public function message($title,$content,$payload,$id){
         $message  =   new Builder();
         $targetMessage = new TargetedMessage();
         $message->title($title);  // 通知栏的title
@@ -60,9 +67,9 @@ class Xmpush extends Model{
         $message->extra('id', $id); // id
         $message->notifyId(0); // 通知类型。最多支持0-4 5个取值范围，同样的类型的通知会互相覆盖，不同类型可以在通知栏并存
         $message->build();
-        $targetMessage->setTarget($alias, TargetedMessage::TARGET_TYPE_USER_ACCOUNT); // 设置发送目标。可通过regID,alias和topic三种方式发送
-        $targetMessage->setMessage($message);
-        return $targetMessage;
+        /*$targetMessage->setTarget($alias, TargetedMessage::TARGET_TYPE_USER_ACCOUNT); // 设置发送目标。可通过regID,alias和topic三种方式发送
+        $targetMessage->setMessage($message);*/
+        return $message;
     }
     public function iosMessage($title,$content,$payload,$id){
         $message = new IOSBuilder();
