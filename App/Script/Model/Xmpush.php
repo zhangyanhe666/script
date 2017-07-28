@@ -24,7 +24,6 @@ class Xmpush extends Model{
     public $targetMessage;
     public function androidSender(){
         if(!$this->sender){
-            Constants::setPackage(self::APP_PACKAGENAME);
             Constants::setSecret(self::SECRET);
             $this->sender   =   new Sender();
         }
@@ -32,7 +31,6 @@ class Xmpush extends Model{
     }
     public function iosSender(){        
         if(!$this->iosSender){
-            Constants::setBundleId(self::IOS_BUNDLE_ID);
             Constants::setSecret(self::IOS_SECRET);
             Constants::useSandbox();
             $this->iosSender   =   new Sender();
@@ -52,11 +50,12 @@ class Xmpush extends Model{
                 print_r($this->iosSender()->sendToAliases($iosmessage,array($sendTarget))->getRaw());
                 break;
             default :
-                echo '没有选择发送方式';
+                echo '没有选择发送方式';//13717883106
         }
     }
     
     public function message($title,$content,$payload,$id){
+        Constants::setPackage(self::APP_PACKAGENAME);
         $message  =   new Builder();
         $targetMessage = new TargetedMessage();
         $message->title($title);  // 通知栏的title
@@ -72,6 +71,7 @@ class Xmpush extends Model{
         return $message;
     }
     public function iosMessage($title,$content,$payload,$id){
+        Constants::setBundleId(self::IOS_BUNDLE_ID);
         $message = new IOSBuilder();
         $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
