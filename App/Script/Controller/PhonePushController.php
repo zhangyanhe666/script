@@ -29,8 +29,8 @@ class PhonePushController  extends ScriptBaseController{
             $pushlist   =   array_map(function($v){                
                 $push['title'] =   $v['title'];
                 $push['desc'] =   $v['desc'];
-                $push['payload'] =   '#'.$v['action'].'#'.$v['cid'];
-                $push['user_type'] =   $v['type'];
+                $push['payload'] =   '#'.$v['type'].'#'.$v['cid'];
+                $push['user_type'] =   $v['action'];
                 $push['sendTarget'] =   $v['push_id'];
                 return $push;
             },$data);
