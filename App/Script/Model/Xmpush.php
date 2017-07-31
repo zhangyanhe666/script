@@ -75,6 +75,7 @@ class Xmpush extends Model{
         $message = new IOSBuilder();
         $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
+        $message->body($content);
         $message->extra('payload', $payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
       //  $message->badge('1');
         $message->extra('id', $id); // id
