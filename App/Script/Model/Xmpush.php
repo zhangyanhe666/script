@@ -57,7 +57,7 @@ class Xmpush extends Model{
     public function message($title,$content,$payload,$id){
         Constants::setPackage(self::APP_PACKAGENAME);
         $message  =   new Builder();
-        $message->title($title);  // 通知栏的title
+        !empty($title) && $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
         $message->passThrough(0);  // 这是一条通知栏消息，如果需要透传，把这个参数设置成1,同时去掉title和descption两个参数
         $message->payload($payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
@@ -73,7 +73,7 @@ class Xmpush extends Model{
     public function iosMessage($title,$content,$payload,$id){
         Constants::setBundleId(self::IOS_BUNDLE_ID);
         $message = new IOSBuilder();
-        $message->title($title);  // 通知栏的title
+        !empty($title) && $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
         $message->body($content);
         $message->extra('payload', $payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
