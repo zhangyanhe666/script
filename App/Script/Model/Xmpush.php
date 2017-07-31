@@ -57,7 +57,6 @@ class Xmpush extends Model{
     public function message($title,$content,$payload,$id){
         Constants::setPackage(self::APP_PACKAGENAME);
         $message  =   new Builder();
-        $targetMessage = new TargetedMessage();
         $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
         $message->passThrough(0);  // 这是一条通知栏消息，如果需要透传，把这个参数设置成1,同时去掉title和descption两个参数
@@ -68,6 +67,7 @@ class Xmpush extends Model{
         $message->build();
         /*$targetMessage->setTarget($alias, TargetedMessage::TARGET_TYPE_USER_ACCOUNT); // 设置发送目标。可通过regID,alias和topic三种方式发送
         $targetMessage->setMessage($message);*/
+     print_r($message);
         return $message;
     }
     public function iosMessage($title,$content,$payload,$id){
@@ -80,6 +80,7 @@ class Xmpush extends Model{
         $message->extra('id', $id); // id
         $message->soundUrl('default');
         $message->build();
+             print_r($message);
         return $message;
     }
 }
