@@ -5,8 +5,8 @@ return array (
     'driver' => 'Pdo',
     'key' => 'scrip',
     'dsn' => 'mysql:dbname=mili;host=101.201.113.171:3306',
-    'username' => 'test75',
-    'password' => 'KeYpZrZx',
+    'username' => 'mili',
+    'password' => 'Mili_123',
     'driver_options' => 
     array (
       1002 => 'SET NAMES \'UTF8\'',
