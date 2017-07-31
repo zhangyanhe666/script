@@ -32,7 +32,7 @@ class Xmpush extends Model{
     public function iosSender(){        
         if(!$this->iosSender){
             Constants::setSecret(self::IOS_SECRET);
-            Constants::useSandbox();
+            //Constants::useSandbox();关闭ios测试环境
             $this->iosSender   =   new Sender();
         }
         return $this->iosSender;
