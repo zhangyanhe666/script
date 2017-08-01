@@ -52,6 +52,6 @@ class PhonePushController  extends ScriptBaseController{
         return $this->getServer($this->dbName.'.xmpush_queue');
     }
     public function messageListdb(){
-        return $this->getServer($this->dbName.'script.push_message_list');
+        return $this->getServer($this->dbName.'.push_message_list');
     }
 }
