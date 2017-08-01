@@ -32,10 +32,12 @@ class Xmpush extends Model{
     public function iosSender(){        
         if(!$this->iosSender){
             Constants::setSecret(self::IOS_SECRET);
-            //Constants::useSandbox();关闭ios测试环境
             $this->iosSender   =   new Sender();
         }
         return $this->iosSender;
+    }
+    public function iosTest(){
+       Constants::useSandbox();//关闭ios测试环境; 
     }
     public function push($title,$content,$payload,$id,$user_type,$sendTarget){
         $message    =   $this->message($title, $content, $payload,$id);
@@ -50,14 +52,14 @@ class Xmpush extends Model{
                 print_r($this->iosSender()->sendToAliases($iosmessage,array($sendTarget))->getRaw());
                 break;
             default :
-                echo '没有选择发送方式';//13717883106
+                echo '没有选择发送方式';
         }
     }
     
     public function message($title,$content,$payload,$id){
         Constants::setPackage(self::APP_PACKAGENAME);
         $message  =   new Builder();
-        !empty($title) && $message->title($title);  // 通知栏的title
+        $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
         $message->passThrough(0);  // 这是一条通知栏消息，如果需要透传，把这个参数设置成1,同时去掉title和descption两个参数
         $message->payload($payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
@@ -67,13 +69,13 @@ class Xmpush extends Model{
         $message->build();
         /*$targetMessage->setTarget($alias, TargetedMessage::TARGET_TYPE_USER_ACCOUNT); // 设置发送目标。可通过regID,alias和topic三种方式发送
         $targetMessage->setMessage($message);*/
-     print_r($message);
+        print_r($message);
         return $message;
     }
     public function iosMessage($title,$content,$payload,$id){
         Constants::setBundleId(self::IOS_BUNDLE_ID);
         $message = new IOSBuilder();
-        !empty($title) && $message->title($title);  // 通知栏的title
+        $message->title($title);  // 通知栏的title
         $message->description($content); // 通知栏的descption
         $message->body($content);
         $message->extra('payload', $payload); // 携带的数据，点击后将会通过客户端的receiver中的onReceiveMessage方法传入。
@@ -81,7 +83,7 @@ class Xmpush extends Model{
         $message->extra('id', $id); // id
         $message->soundUrl('default');
         $message->build();
-             print_r($message);
+        print_r($message);
         return $message;
     }
 }
